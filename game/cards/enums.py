@@ -42,22 +42,25 @@ class Suit(Enum):
     DIAMONDS = "Diamonds"
     CLUBS = "Clubs"
     SPADES = "Spades"
+    JOKER = "Joker"
 
 SUIT_SYMBOLS: dict[Suit, str] = {
     Suit.HEARTS: "♥",
     Suit.DIAMONDS: "♦",
     Suit.CLUBS: "♣",
     Suit.SPADES: "♠",
+    Suit.JOKER: "Joker",
 }
 
 
-JOKER_COLORS: list[Color] = [Color.BLACK, Color.RED]
+JOKER_COLORS: tuple[Color, Color] = (Color.BLACK, Color.RED)
 
-SUIT_COLORS: dict[Suit, Color] = {
+SUIT_COLORS: dict[Suit, Color | tuple[Color, Color]] = {
     Suit.HEARTS: Color.RED,
     Suit.DIAMONDS: Color.RED,
     Suit.CLUBS: Color.BLACK,
     Suit.SPADES: Color.BLACK,
+    Suit.JOKER: JOKER_COLORS,
 }
 
 

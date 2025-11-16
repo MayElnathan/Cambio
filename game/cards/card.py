@@ -1,31 +1,32 @@
 # game/cards/card.py
 
-from .enums import Color, Value, VALUE_MAP, Suit, SUIT_COLORS, JOKER_COLORS
+from .enums import Color, Value, VALUE_MAP, Suit, SUIT_COLORS, SUIT_SYMBOLS
 
 class Card:
     color: Color
     value: Value
     rank: int
-    suit: Suit | None
+    suit: Suit
+    symbol: str
 
-    def __init__(self, value: Value, suit: Suit | None = None, color: Color | None = None) -> None:
+    def __init__(self, value: Value, suit: Suit, color: Color | None = None) -> None:
         if color is None:
-            if suit is None:
-                raise ValueError("Must provide either suit or color")
-            self.color = SUIT_COLORS[suit]
+            suit_color = SUIT_COLORS[suit]
+            if isinstance(suit_color, tuple):
+                raise ValueError(f"Color must be explicitly provided for suit {suit}")
+            self.color = suit_color
         else:
-            if color not in JOKER_COLORS:
-                raise ValueError(f"Invalid color: {color}")
             self.color = color
         self.value = value
         self.rank = VALUE_MAP[value]
         self.suit = suit
+        self.symbol = SUIT_SYMBOLS[suit]
 
     def __str__(self) -> str:
-        return f"{self.color} {self.value} ({self.rank}) {self.suit}"
+        return f"{self.color} {self.value} ({self.rank}) {self.symbol}"
 
     def __repr__(self) -> str:
-        return f"Card(color={self.color}, value={self.value}, rank={self.rank}, suit={self.suit})"
+        return f"Card(color={self.color}, value={self.value}, rank={self.rank}, suit={self.suit}, symbol={self.symbol})"
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Card):

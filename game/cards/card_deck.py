@@ -9,8 +9,8 @@ class CardDeck:
     cards: list[Card]
 
     def __init__(self) -> None:
-        self.cards = [Card(value, suit) for suit in Suit for value in Value if value != Value.JOKER]
-        self.cards.extend([Card(Value.JOKER, None, color) for color in JOKER_COLORS])
+        self.cards = [Card(value, suit) for suit in Suit for value in Value if value != Value.JOKER and suit != Suit.JOKER]
+        self.cards.extend([Card(Value.JOKER, Suit.JOKER, color) for color in JOKER_COLORS])
         self.shuffle()
 
     def __str__(self) -> str:
@@ -30,3 +30,6 @@ class CardDeck:
 
     def draw_cards(self, count: int = 1) -> list[Card]:
         return [self.cards.pop() for _ in range(count)]
+
+    def size(self) -> int:
+        return len(self.cards)
