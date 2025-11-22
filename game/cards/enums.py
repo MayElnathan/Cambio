@@ -4,7 +4,7 @@ class Color(Enum):
     RED = "red"
     BLACK = "black"
 
-class Value(IntEnum):
+class CardValue(IntEnum):
     JOKER = 0
     ACE = 1
     TWO = 2
@@ -20,21 +20,38 @@ class Value(IntEnum):
     QUEEN = 12
     KING = 13
 
-VALUE_MAP: dict[Value, int] = {
-    Value.JOKER: 0,
-    Value.ACE: 1,
-    Value.TWO: 2,
-    Value.THREE: 3,
-    Value.FOUR: 4,
-    Value.FIVE: 5,
-    Value.SIX: 6,
-    Value.SEVEN: 7,
-    Value.EIGHT: 8,
-    Value.NINE: 9,
-    Value.TEN: 10,
-    Value.JACK: 10,
-    Value.QUEEN: 10,
-    Value.KING: 10,
+CARD_VALUE_TO_POINTS: dict[CardValue, int] = {
+    CardValue.JOKER: 0,
+    CardValue.ACE: 1,
+    CardValue.TWO: 2,
+    CardValue.THREE: 3,
+    CardValue.FOUR: 4,
+    CardValue.FIVE: 5,
+    CardValue.SIX: 6,
+    CardValue.SEVEN: 7,
+    CardValue.EIGHT: 8,
+    CardValue.NINE: 9,
+    CardValue.TEN: 10,
+    CardValue.JACK: 10,
+    CardValue.QUEEN: 10,
+    CardValue.KING: 10,
+}
+
+class Action(Enum):
+    PEEK_AT_SELF_CARD = "peek_at_self_card"
+    PEEK_AT_OTHER_CARD = "peek_at_other_card"
+    BURN_OTHER_CARD = "burn_other_card"
+    SWAP_TWO_CARDS = "swap_two_cards"
+    TWO_PEEKS_ONW_SWAP_CARDS = "two_peeks_onw_swap_cards"
+
+CARD_VALUE_TO_ACTION: dict[CardValue, Action] = {
+    CardValue.SEVEN: Action.PEEK_AT_SELF_CARD,
+    CardValue.EIGHT: Action.PEEK_AT_SELF_CARD,
+    CardValue.NINE: Action.PEEK_AT_OTHER_CARD,
+    CardValue.TEN: Action.PEEK_AT_OTHER_CARD,
+    CardValue.JACK: Action.BURN_OTHER_CARD,
+    CardValue.QUEEN: Action.SWAP_TWO_CARDS,
+    CardValue.KING: Action.TWO_PEEKS_ONW_SWAP_CARDS,
 }
 
 class Suit(Enum):
@@ -42,25 +59,27 @@ class Suit(Enum):
     DIAMONDS = "Diamonds"
     CLUBS = "Clubs"
     SPADES = "Spades"
-    JOKER = "Joker"
+    RED_JOKER = "Red Joker"
+    BLACK_JOKER = "Black Joker"
 
-SUIT_SYMBOLS: dict[Suit, str] = {
+CARD_SUIT_TO_SYMBOLS: dict[Suit, str] = {
     Suit.HEARTS: "♥",
     Suit.DIAMONDS: "♦",
     Suit.CLUBS: "♣",
     Suit.SPADES: "♠",
-    Suit.JOKER: "Joker",
+    Suit.RED_JOKER: "Red Joker",
+    Suit.BLACK_JOKER: "Black Joker",
 }
 
 
-JOKER_COLORS: tuple[Color, Color] = (Color.BLACK, Color.RED)
 
-SUIT_COLORS: dict[Suit, Color | tuple[Color, Color]] = {
+CARD_SUIT_COLORS: dict[Suit, Color] = {
     Suit.HEARTS: Color.RED,
     Suit.DIAMONDS: Color.RED,
     Suit.CLUBS: Color.BLACK,
     Suit.SPADES: Color.BLACK,
-    Suit.JOKER: JOKER_COLORS,
+    Suit.RED_JOKER: Color.RED,
+    Suit.BLACK_JOKER: Color.BLACK,
 }
 
 
